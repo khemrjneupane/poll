@@ -1,11 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  env: {
-    API_URL: "http://localhost:3000",
-    NEXTAUTH_URL: "http://localhost:3000",
-    NEXTAUTH_SECRET: "justrandomsecret12345",
-  },
+  env: {},
   images: {
     remotePatterns: [
       {

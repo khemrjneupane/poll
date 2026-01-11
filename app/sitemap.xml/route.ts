@@ -33,7 +33,7 @@ function isNewsArray(v: unknown): v is NewsArticle[] {
 }
 
 export async function GET() {
-  const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+  const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
   // ===== Fetch nominees =====
   let nominees: Nominee[] = [];
