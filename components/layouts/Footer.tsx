@@ -82,7 +82,7 @@ const Footer = () => {
               Contact
             </Link>
             <Link href="/faq" className="hover:text-blue-200 transition-colors">
-              FAQ
+              FAQs
             </Link>
           </div>
         </div>
