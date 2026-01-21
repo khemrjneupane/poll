@@ -79,7 +79,7 @@ const Footer = () => {
               href="/contact"
               className="hover:text-blue-200 transition-colors"
             >
-              Contact
+              ContactUs
             </Link>
             <Link href="/faq" className="hover:text-blue-200 transition-colors">
               FAQs
