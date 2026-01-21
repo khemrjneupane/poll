@@ -60,15 +60,19 @@ export default function RootLayout({
         {/* Google tag (gtag.js) */}
         <Script
           strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=AW-473921409"
+          src="https://www.googletagmanager.com/gtag/js?id=G-KJTS64MJ7W"
         />
         <Script id="gtag-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-
-            gtag('config', 'AW-473921409');
+            gtag('config', 'G-KJTS64MJ7W',
+            {
+            page_title: 'VoteNepal-Home',
+            page_location: window.location.href
+          });
+            
           `}
         </Script>
         {/* Google AdSense script */}
