@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://votenepal.net"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://votenepal.net",
   ),
 
   alternates: {
@@ -57,9 +57,10 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="google-adsense-account" content="ca-pub-1833501068964247" />
-        {/* <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-EJ5X7KQVNY"
+        {/* Google tag (gtag.js) */}
+        <Script
           strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=AW-473921409"
         />
         <Script id="gtag-init" strategy="afterInteractive">
           {`
@@ -67,9 +68,9 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            gtag('config', 'G-EJ5X7KQVNY');
+            gtag('config', 'AW-473921409');
           `}
-        </Script> */}
+        </Script>
         {/* Google AdSense script */}
         <AdSense pId="1833501068964247" />
       </head>
