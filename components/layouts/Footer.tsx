@@ -50,7 +50,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-center md:text-left opacity-90">
-            &copy; {new Date().getFullYear()} VoteNepal.net. All rights
+            &copy; {new Date().getFullYear()} votenepal.net. All rights
             reserved.
           </p>
         </div>
@@ -79,7 +79,7 @@ const Footer = () => {
               href="/contact"
               className="hover:text-blue-200 transition-colors"
             >
-              ContactUs
+              Contact Us
             </Link>
             <Link href="/faq" className="hover:text-blue-200 transition-colors">
               FAQs
