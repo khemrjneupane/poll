@@ -16,7 +16,7 @@ const ENGLISH_ONLY_REGEX = /^[A-Za-z0-9 .,'-]*$/;
 const NUMBER_ONLY_REGEX = /^[0-9]*$/;
 
 const englishOnlyFields = ["name", "surname", "municipality", "tole"];
-const numberFields = ["age", "ward"];
+const numberFields = ["age"];
 
 const parties = [
   "Aam Aadmi Party Nepal",
@@ -268,7 +268,7 @@ const AddNominees = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value, files } = e.target as HTMLInputElement;
 
@@ -303,12 +303,7 @@ const AddNominees = () => {
       (formData.group === "party" && formData.party);
 
     const location =
-      formData.province &&
-      formData.district &&
-      formData.municipality &&
-      formData.ward &&
-      !errors.municipality &&
-      !errors.ward;
+      formData.province && formData.district && formData.ward && !errors.ward;
 
     const avatar = formData.avatar !== null;
 
@@ -427,7 +422,7 @@ const AddNominees = () => {
         {/* PERSONAL INFO */}
         <section
           className={getSectionClass(
-            !!formData.name && !!formData.surname && !!formData.age
+            !!formData.name && !!formData.surname && !!formData.age,
           )}
         >
           <h3 className="font-semibold text-lg mb-2">Personal Information</h3>
@@ -526,7 +521,7 @@ const AddNominees = () => {
             !!formData.province &&
               !!formData.district &&
               !!formData.municipality &&
-              !!formData.ward
+              !!formData.ward,
           )}
         >
           <h3 className="font-semibold text-lg mb-2">Location Information</h3>
@@ -569,7 +564,7 @@ const AddNominees = () => {
             </div>
 
             {/* MUNICIPALITY */}
-            <div>
+            {/* <div>
               <label className="font-medium">Municipality *</label>
               <input
                 name="municipality"
@@ -581,17 +576,17 @@ const AddNominees = () => {
               {errors.municipality && (
                 <p className="text-red-500 text-sm">{errors.municipality}</p>
               )}
-            </div>
+            </div> */}
 
             {/* WARD */}
             <div>
-              <label className="font-medium">Ward *</label>
+              <label className="font-medium">Constituent Area *</label>
               <input
                 name="ward"
                 value={formData.ward}
                 onChange={handleChange}
                 className="p-2 border rounded w-full"
-                placeholder="Ward number"
+                placeholder="E.g. Jhapa - 5"
               />
               {errors.ward && (
                 <p className="text-red-500 text-sm">{errors.ward}</p>
@@ -599,7 +594,7 @@ const AddNominees = () => {
             </div>
 
             {/* TOLE */}
-            <div>
+            {/* <div>
               <label className="font-medium">Tole (optional)</label>
               <input
                 name="tole"
@@ -611,7 +606,7 @@ const AddNominees = () => {
               {errors.tole && (
                 <p className="text-red-500 text-sm">{errors.tole}</p>
               )}
-            </div>
+            </div> */}
           </div>
         </section>
 
@@ -642,7 +637,9 @@ const AddNominees = () => {
               type="submit"
               disabled={!isFormValid}
               className={`px-6 py-3 rounded text-white text-lg ${
-                isFormValid ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400"
+                isFormValid
+                  ? "bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                  : "bg-gray-400"
               }`}
             >
               {isFormValid ? "Add Nominee" : "Fill Required Fields"}

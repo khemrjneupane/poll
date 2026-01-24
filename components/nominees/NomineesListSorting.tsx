@@ -199,15 +199,15 @@ export default function NomineeListSorting({
 
   const province = useMemo(
     () => (provinceSelect === "all" ? "" : provinceSelect),
-    [provinceSelect]
+    [provinceSelect],
   );
   const group = useMemo(
     () => (groupSelect === "all" ? "" : groupSelect),
-    [groupSelect]
+    [groupSelect],
   );
   const party = useMemo(
     () => (partySelect === "all" ? "" : partySelect),
-    [partySelect]
+    [partySelect],
   );
 
   const { data, isLoading, error } = useNominees(
@@ -217,7 +217,7 @@ export default function NomineeListSorting({
     group,
     debouncedName,
     debouncedSurname,
-    party
+    party,
   );
 
   useEffect(() => {
@@ -253,7 +253,7 @@ export default function NomineeListSorting({
       const result = await res.json();
       if (result.success) {
         toast.success(
-          approve ? "Nominee authenticated" : "Authentication revoked"
+          approve ? "Nominee authenticated" : "Authentication revoked",
         );
         refetchNominees();
       } else toast.error(result.error || "Failed to authenticate nominee");
@@ -266,7 +266,7 @@ export default function NomineeListSorting({
 
   const handleVote = async (
     e: React.MouseEvent<HTMLButtonElement>,
-    nomineeId: string
+    nomineeId: string,
   ) => {
     e.preventDefault();
     try {
@@ -383,7 +383,7 @@ export default function NomineeListSorting({
         </div>
       )}
 
-      <div className={`grid grid-cols-1 sm:grid-cols-2 gap-6`}>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 gap-6 `}>
         {data?.nominees
           ?.filter((n) => (canAdmin ? true : n.isApproved))
           .map((n, index) => {
@@ -418,7 +418,7 @@ export default function NomineeListSorting({
                     </button>
                   )}
 
-                  <Card className="h-full rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-md hover:shadow-xl transition-all duration-300 bg-white dark:bg-slate-800">
+                  <Card className="h-full rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-md hover:shadow-xl transition-all duration-300 bg-white dark:bg-slate-800 bg-gradient-to-r from-red-600 to-blue-600 bg-clip-text text-transparent drop-shadow-sm p-1">
                     {/* ✅ Link wraps only main nominee info */}
                     <Link href={`/nominees/${n._id}`}>
                       <div className="p-5 flex items-center justify-center gap-5">
@@ -441,15 +441,14 @@ export default function NomineeListSorting({
                           <h3 className="text-lg font-semibold hover:underline">
                             {n.name} {n.surname}
                           </h3>
-                          <p className="text-sm text-slate-500">
-                            {n.party || "Independent"}
-                          </p>
-                          <p className="text-sm text-slate-400">{n.province}</p>
-                          <div className="text-sm mt-1">
-                            <span className="font-medium text-slate-600">
-                              Votes:{" "}
+                          <p className="text-sm ">{n.party || "Independent"}</p>
+                          <p className="">{`Area:  ${n.address.ward}`}</p>
+                          <p className="">{`Province:  ${n.province}`}</p>
+                          <div className="mt-1 flex items-center gap-2">
+                            <span className="font-semibold">Votes: </span>
+                            <span className="font-bold text-4xl text-blue-500">
+                              {n.votes}
                             </span>
-                            <span className="font-semibold">{n.votes}</span>
                           </div>
                         </div>
 

@@ -21,6 +21,9 @@ export interface Nominee {
   avatar: { public_id: string; url: string } | undefined;
   voters: Voter[];
   isApproved: boolean;
+  address: {
+    ward: string;
+  };
 }
 
 export interface Pagination {
@@ -45,7 +48,7 @@ export function useNominees(
   //fullname: string = "",
   name: string = "",
   surname: string = "",
-  party: string = "" // ✅ new param
+  party: string = "", // ✅ new param
 ) {
   return useQuery<NomineesResponse, Error>({
     queryKey: [

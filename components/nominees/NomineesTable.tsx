@@ -28,6 +28,9 @@ export interface Nominee {
   image: string;
   avatar: { public_id: string; url: string } | undefined;
   voters: Voter[];
+  address: {
+    ward: string;
+  };
 }
 export interface SingleVotedNomineeProps {
   nominees: Nominee[];
@@ -110,10 +113,10 @@ const NomineesTable = ({
                 <tr>
                   <th className="border px-4 py-2">Nominee</th>
                   <th className="border px-4 py-2">Full Name</th>
-                  <th className="border px-4 py-2">Age</th>
+                  {/* <th className="border px-4 py-2">Age</th> */}
                   <th className="border px-4 py-2">Party/Independent</th>
-                  <th className="border px-4 py-2">Group</th>
                   <th className="border px-4 py-2">Province</th>
+                  <th className="border px-4 py-2">Area</th>
                   <th className="border px-4 py-2">Votes Ranking</th>
                 </tr>
               </thead>
@@ -143,10 +146,10 @@ const NomineesTable = ({
                       {nominee.name} {nominee.surname}
                     </td>
 
-                    <td className="border px-4 py-2">{nominee.age}</td>
+                    {/* <td className="border px-4 py-2">{nominee.age}</td> */}
                     <td className="border px-4 py-2">{nominee.party}</td>
-                    <td className="border px-4 py-2">{nominee.group}</td>
                     <td className="border px-4 py-2">{nominee.province}</td>
+                    <td className="border px-4 py-2">{nominee.address.ward}</td>
 
                     <td className="border px-4 py-2">
                       <div className="flex items-center gap-1">
@@ -201,16 +204,17 @@ const NomineesTable = ({
 
                 {/* Details */}
                 <div className="mt-3 space-y-1 text-sm">
-                  <p>
+                  {/* <p>
                     <span className="font-semibold">Age:</span> {nominee.age}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Group:</span>{" "}
-                    {nominee.group}
-                  </p>
+                  </p> */}
+
                   <p>
                     <span className="font-semibold">Province:</span>{" "}
                     {nominee.province}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Area:</span>{" "}
+                    {nominee.address.ward}
                   </p>
                   <p className="flex items-center gap-1">
                     <span className="font-semibold">Votes:</span>{" "}
@@ -248,7 +252,7 @@ const NomineesTable = ({
                   >
                     {p}
                   </button>
-                )
+                ),
               )}
 
               <button

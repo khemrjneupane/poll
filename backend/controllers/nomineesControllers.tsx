@@ -23,7 +23,7 @@ export function respond<T>(data: T, status: number = 200) {
       data,
       timestamp: new Date().toISOString(),
     },
-    { status }
+    { status },
   );
 }
 
@@ -37,7 +37,7 @@ export const getNominees = async (request: NextRequest) => {
         {
           error: `Rate limit exceeded. Try again in ${limitCheck.retryAfter}s`,
         },
-        429
+        429,
       );
     }
 
@@ -133,9 +133,9 @@ const nomineeSchema = z.object({
   //Address validation
   address: z.object({
     district: z.string().min(3).max(100),
-    municipality: z.string().min(1).max(100),
-    ward: z.number().min(1).max(32),
-    tole: z.string().max(100).optional(),
+    //municipality: z.string().min(1).max(100),
+    ward: z.string().min(1).max(32),
+    //tole: z.string().max(100).optional(),
   }),
   party: z.string().max(50).optional().default("Independent"),
   group: z.enum(["party", "independent"]),
@@ -176,9 +176,9 @@ export const postNominees = async (request: NextRequest) => {
     const party = formData.get("party") as string | undefined;
     // 🆕 Address fields
     const district = formData.get("district") as string;
-    const municipality = formData.get("municipality") as string;
-    const ward = Number(formData.get("ward"));
-    const tole = formData.get("tole") as string | undefined;
+    //const municipality = formData.get("municipality") as string;
+    const ward = formData.get("ward");
+    //const tole = formData.get("tole") as string | undefined;
     const avatarFile = formData.get("avatar") as File | null;
     const fingerprint = (formData.get("fingerprint") as string) || "";
 
@@ -192,7 +192,7 @@ export const postNominees = async (request: NextRequest) => {
       !group ||
       !province ||
       !district ||
-      !municipality ||
+      //!municipality ||
       !ward
     ) {
       return respond({ error: "Missing required fields" }, 400);
@@ -204,7 +204,7 @@ export const postNominees = async (request: NextRequest) => {
       const bytes = await avatarFile.arrayBuffer();
       const buffer = Buffer.from(bytes);
       const base64Data = `data:${avatarFile.type};base64,${buffer.toString(
-        "base64"
+        "base64",
       )}`;
 
       const uploaded = await uploadFile(base64Data, "nominee_avatars");
@@ -218,7 +218,7 @@ export const postNominees = async (request: NextRequest) => {
     if (!session || !session.user?.id) {
       return NextResponse.json(
         { success: false, message: "Not authenticated" },
-        { status: 401 }
+        { status: 401 },
       );
     }
     const nomineeDataWithIP = {
@@ -229,7 +229,8 @@ export const postNominees = async (request: NextRequest) => {
       province,
       party: group === "party" ? party : undefined,
       avatar: avatarData || { public_id: "", url: "" }, // ✅ always present
-      address: { district, municipality, ward, tole },
+      //address: { district, municipality, ward, tole },
+      address: { district, ward },
       //ipAddress: ip,
       //nominator: { userId: session.user.id, ipAddress: ip, fingerprint },
       nominator: { userId: session.user.id, fingerprint },
@@ -244,7 +245,7 @@ export const postNominees = async (request: NextRequest) => {
           error: "Invalid data",
           details: validationResult.error.issues,
         },
-        400
+        400,
       );
     }
 
@@ -296,7 +297,7 @@ export const postNominees = async (request: NextRequest) => {
         {
           error: `${duplicateField}: ${err.keyValue[duplicateField]} - already nominated!`,
         },
-        409
+        409,
       );
     }
 
@@ -321,7 +322,7 @@ export const putNomineeVote = async (req: NextRequest, nomineeId: string) => {
     if (ipAlreadyVoted) {
       return NextResponse.json(
         { success: false, message: "You have already voted" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -334,7 +335,7 @@ export const putNomineeVote = async (req: NextRequest, nomineeId: string) => {
     if (userAlreadyVoted) {
       return NextResponse.json(
         { success: false, message: "You have already voted" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -345,25 +346,25 @@ export const putNomineeVote = async (req: NextRequest, nomineeId: string) => {
         $inc: { votes: 1 },
         $push: { voters: { userId: session?.user.id, fingerprint } },
       },
-      { new: true }
+      { new: true },
     );
 
     if (!nominee) {
       return NextResponse.json(
         { success: false, message: "Nominee not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     return NextResponse.json(
       { success: true, message: "Vote successful", nominee },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("PUT /api/nominees/vote error:", error);
     return NextResponse.json(
       { success: false, message: "Failed to cast vote" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
@@ -374,7 +375,7 @@ export const putNomineeVote = async (req: NextRequest, nomineeId: string) => {
 
 export const putPopularCandidateVote = async (
   req: NextRequest,
-  popCandidateId: string
+  popCandidateId: string,
 ) => {
   const session = await getServerSession(authOptions);
   try {
@@ -388,7 +389,7 @@ export const putPopularCandidateVote = async (
     if (ipAlreadyVoted) {
       return NextResponse.json(
         { success: false, message: "You have already voted someone!" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -401,7 +402,7 @@ export const putPopularCandidateVote = async (
     if (userAlreadyVoted) {
       return NextResponse.json(
         { success: false, message: "You have already voted someone!" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -412,25 +413,25 @@ export const putPopularCandidateVote = async (
         $inc: { votes: 1 },
         $push: { voters: { userId: session?.user.id, fingerprint } },
       },
-      { new: true }
+      { new: true },
     );
 
     if (!popCandidate) {
       return NextResponse.json(
         { success: false, message: "popCandidate not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     return NextResponse.json(
       { success: true, message: "Vote successful", popCandidate },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("PUT /api/popCandidates/vote error:", error);
     return NextResponse.json(
       { success: false, message: "Failed to cast vote for pupular candidate" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
@@ -447,7 +448,7 @@ export const updateNominees = async (req: NextRequest, nomineeId: string) => {
     if (!session || session.user.role !== "admin") {
       return NextResponse.json(
         { success: false, message: "Admin access required" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -481,35 +482,30 @@ export const updateNominees = async (req: NextRequest, nomineeId: string) => {
     set("province");
     set("party");
     set("district");
-    set("municipality");
+    //set("municipality");
     set("ward");
-    set("tole");
+    //set("tole");
 
     // Fix numeric fields
     if (updateData.age) updateData.age = Number(updateData.age);
-    if (updateData.ward) updateData.ward = Number(updateData.ward);
+    if (updateData.ward) updateData.ward = updateData.ward;
 
     // Build address if needed
-    if (
-      updateData.district ||
-      updateData.municipality ||
-      updateData.ward ||
-      updateData.tole
-    ) {
+    if (updateData.district || updateData.ward) {
       updateData.address = {
         district: updateData.district ?? existingNominee.address.district,
-        municipality:
-          updateData.municipality ?? existingNominee.address.municipality,
+        //municipality:
+        //updateData.municipality ?? existingNominee.address.municipality,
         ward: updateData.ward ?? existingNominee.address.ward,
-        tole: updateData.tole ?? existingNominee.address.tole,
+        //tole: updateData.tole ?? existingNominee.address.tole,
       };
     }
 
     // Remove plain fields that belong only in address
     delete updateData.district;
-    delete updateData.municipality;
+    //delete updateData.municipality;
     delete updateData.ward;
-    delete updateData.tole;
+    //delete updateData.tole;
 
     // Handle avatar upload
     const avatarFile = formData.get("avatar") as File | null;
@@ -517,7 +513,7 @@ export const updateNominees = async (req: NextRequest, nomineeId: string) => {
       const bytes = await avatarFile.arrayBuffer();
       const buffer = Buffer.from(bytes);
       const base64 = `data:${avatarFile.type};base64,${buffer.toString(
-        "base64"
+        "base64",
       )}`;
 
       const uploaded = await uploadFile(base64, "nominee_avatars");
@@ -535,7 +531,7 @@ export const updateNominees = async (req: NextRequest, nomineeId: string) => {
     const updatedNominee = await Nominee.findByIdAndUpdate(
       nomineeId,
       updateData,
-      { new: true }
+      { new: true },
     );
 
     return respond({ success: true, nominee: updatedNominee }, 200);
@@ -550,14 +546,14 @@ export const updateNominees = async (req: NextRequest, nomineeId: string) => {
 // admin authenticate nominee starts
 export const adminAuthenticateNominee = async (
   req: NextRequest,
-  nomineeId: string
+  nomineeId: string,
 ) => {
   try {
     const session = await getServerSession(authOptions);
     if (!session || session.user.role !== "admin") {
       return NextResponse.json(
         { success: false, message: "Unauthorized access" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -569,7 +565,7 @@ export const adminAuthenticateNominee = async (
     if (!nominee) {
       return NextResponse.json(
         { success: false, message: "Nominee not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -585,7 +581,7 @@ export const adminAuthenticateNominee = async (
     console.error("Failed to approve/reject nominee:", error);
     return NextResponse.json(
       { success: false, message: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
@@ -596,7 +592,7 @@ export const adminAuthenticateNominee = async (
 export const deleteNomineeById = async (
   req: NextRequest,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  context: any
+  context: any,
 ) => {
   try {
     await dbConnect();
@@ -606,14 +602,14 @@ export const deleteNomineeById = async (
     if (!id) {
       return NextResponse.json(
         { success: false, error: "Nominee ID is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     const session = await getServerSession(authOptions);
     if (!session || session.user.role !== "admin") {
       return NextResponse.json(
         { success: false, message: "Unauthorized access" },
-        { status: 403 }
+        { status: 403 },
       );
     }
     const nominee = await Nominee.findById(id);
@@ -621,7 +617,7 @@ export const deleteNomineeById = async (
     if (!nominee) {
       return NextResponse.json(
         { success: false, error: "Nominee not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -635,7 +631,7 @@ export const deleteNomineeById = async (
     console.error("DELETE nominee error:", err);
     return NextResponse.json(
       { success: false, error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
@@ -647,7 +643,7 @@ export const deleteNomineeById = async (
 export const getNomineeById = async (
   req: NextRequest,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  context: any
+  context: any,
 ) => {
   try {
     await dbConnect();
@@ -657,7 +653,7 @@ export const getNomineeById = async (
     if (!id) {
       return NextResponse.json(
         { success: false, error: "Nominee ID is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -666,7 +662,7 @@ export const getNomineeById = async (
     if (!nominee) {
       return NextResponse.json(
         { success: false, error: "Nominee not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -675,14 +671,14 @@ export const getNomineeById = async (
     console.error("GET nominee by ID error:", err);
     return NextResponse.json(
       { success: false, error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
 export const getNomineeByVoterId = async (
   req: NextRequest,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  context: any
+  context: any,
 ) => {
   try {
     await dbConnect();
@@ -692,7 +688,7 @@ export const getNomineeByVoterId = async (
     if (!id) {
       return NextResponse.json(
         { success: false, error: "Nominee ID is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -703,7 +699,7 @@ export const getNomineeByVoterId = async (
     if (!nominee) {
       return NextResponse.json(
         { success: false, error: "No nominee found for this voter" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -712,7 +708,7 @@ export const getNomineeByVoterId = async (
     console.error("GET nominee by voter error:", err);
     return NextResponse.json(
       { success: false, error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
@@ -759,7 +755,7 @@ export const getIP = async (request: NextRequest) => {
           messageNominated:
             "No fingerprint or userId found => You have not nominated anyone!",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -803,7 +799,7 @@ export const getIP = async (request: NextRequest) => {
       const voter = nomineeVoted.voters.find(
         (v: { userId?: string; ipAddress?: string; fingerprint?: string }) =>
           (userId && v.userId?.toString() === userId) ||
-          (fingerprint && v.fingerprint === fingerprint)
+          (fingerprint && v.fingerprint === fingerprint),
       );
 
       if (voter) {
@@ -825,7 +821,7 @@ export const getIP = async (request: NextRequest) => {
 
     // success = true if either nomination or voting info exists for the user
     response.success = Boolean(
-      response.youNominatedNominee || response.youVotedNominee
+      response.youNominatedNominee || response.youVotedNominee,
     );
 
     // If neither found, you can return 200 with success:false or 404 — here we keep 200
@@ -844,7 +840,7 @@ export const getIP = async (request: NextRequest) => {
         fingerprint: "",
         messageNominated: "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

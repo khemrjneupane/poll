@@ -14,7 +14,7 @@ interface Nominee {
   address: {
     district: string;
     municipality: string;
-    ward: number;
+    ward: string;
     tole: string;
   };
   avatar?: {
@@ -278,7 +278,7 @@ export default function UpdateNominee({ nomineeId }: UpdateNomineeProps) {
   }, [nomineeId]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -469,7 +469,7 @@ export default function UpdateNominee({ nomineeId }: UpdateNomineeProps) {
           </select>
         </div>
 
-        <div>
+        {/* <div>
           <label className="block text-sm font-medium mb-1">Municipality</label>
           <input
             type="text"
@@ -479,22 +479,24 @@ export default function UpdateNominee({ nomineeId }: UpdateNomineeProps) {
             placeholder={currentNominee.address.municipality}
             className="w-full p-2 border rounded"
           />
-        </div>
+        </div> */}
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Ward</label>
+            <label className="block text-sm font-medium mb-1">
+              Constitutional Area
+            </label>
             <input
-              type="number"
+              type="text"
               name="ward"
               value={formData.ward}
               onChange={handleChange}
-              placeholder={currentNominee.address.ward.toString()}
+              placeholder="Constitutional Area Number"
               className="w-full p-2 border rounded"
             />
           </div>
 
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium mb-1">Tole</label>
             <input
               type="text"
@@ -504,7 +506,7 @@ export default function UpdateNominee({ nomineeId }: UpdateNomineeProps) {
               placeholder={currentNominee.address.tole}
               className="w-full p-2 border rounded"
             />
-          </div>
+          </div> */}
         </div>
 
         <div>

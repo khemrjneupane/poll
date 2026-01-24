@@ -8,9 +8,9 @@ export interface CandidateDocument extends Document {
   name: string;
   address: {
     district: string;
-    municipality: string; // Municipality / Rural Municipality
+    // municipality: string; // Municipality / Rural Municipality
     ward: string;
-    tole?: string; // optional street/locality
+    // tole?: string; // optional street/locality
   };
   surname: string;
   age: number;
@@ -39,7 +39,7 @@ const VoterSchema = new Schema(
     //ipAddress: { type: String },
     fingerprint: { type: String },
   },
-  { _id: false }
+  { _id: false },
 );
 const CandidateSchema = new Schema<CandidateDocument>(
   {
@@ -61,9 +61,9 @@ const CandidateSchema = new Schema<CandidateDocument>(
     age: { type: Number, required: true },
     address: {
       district: { type: String, required: true },
-      municipality: { type: String, required: true }, // Municipality / Rural Municipality
-      ward: { type: Number, required: true },
-      tole: { type: String }, // optional street/locality
+      //municipality: { type: String, required: true }, // Municipality / Rural Municipality
+      ward: { type: String, required: true },
+      //tole: { type: String }, // optional street/locality
     },
 
     party: {
@@ -87,6 +87,6 @@ const CandidateSchema = new Schema<CandidateDocument>(
     isApproved: { type: Boolean, default: false },
   },
 
-  { timestamps: true }
+  { timestamps: true },
 );
 export default models.Nominee || model("Nominee", CandidateSchema);

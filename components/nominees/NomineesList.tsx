@@ -43,7 +43,7 @@ const NomineesList = ({
   const userId = session?.user?.id;
   const handleVote = async (
     e: React.MouseEvent<HTMLButtonElement>,
-    nomineeId: string
+    nomineeId: string,
   ) => {
     e.preventDefault();
     try {
@@ -126,19 +126,22 @@ const NomineesList = ({
                     <p>
                       <strong>Name:</strong> {`${n.name} ${n.surname}`}
                     </p>
-                    <p>
+                    {/* <p>
                       <strong>Age:</strong> {n.age}
-                    </p>
+                    </p> */}
                     <p>
                       <strong>Party:</strong> {n.party}
                     </p>
-                    <p>
+                    {/* <p>
                       <strong>Group:</strong> {n.group}
+                    </p> */}
+                    <p>
+                      <strong>Constituent Area:</strong> {n.address.ward}
                     </p>
                     <p>
                       <strong>Province:</strong> {n.province}
                     </p>
-                    <p>
+                    <p className="text-2xl font-extrabold">
                       <strong>Votes:</strong> {n.votes}
                     </p>
                   </div>
@@ -147,13 +150,13 @@ const NomineesList = ({
                   <div className="flex flex-col justify-center items-center">
                     {hasVoted ? (
                       <>
-                        <button
+                        <Button
                           disabled
-                          className="w-12 h-12 flex items-center justify-center rounded-full shadow-lg bg-green-500 text-white"
+                          className=" w-20 h-20 flex items-center justify-center rounded-full shadow-lg bg-green-500 text-white"
                         >
                           <ThumbsUp className="w-6 h-6" />
-                        </button>
-                        <div className="flex items-center justify-center gap-2">
+                        </Button>
+                        <div className="flex items-center justify-center gap-2 ">
                           <span className="mt-2 text-sm font-medium text-green-600">
                             You Voted
                           </span>
@@ -165,11 +168,11 @@ const NomineesList = ({
                       <>
                         <Button
                           onClick={(e) => handleVote(e, n._id)}
-                          className="cursor-pointer rounded-full w-12 h-12 bg-blue-500 hover:bg-blue-600 text-white shadow-md"
+                          className="cursor-pointer rounded-full w-20 h-20 bg-blue-500 hover:bg-blue-600 text-white shadow-md"
                         >
-                          <ThumbsUp className="w-5 h-5" />
+                          <ThumbsUp className="w-14 h-14 text-xl" />
                         </Button>
-                        <span className="cursor-pointer text-xs text-blue-600 font-medium">
+                        <span className="cursor-pointer text-xl text-blue-600 font-medium">
                           Vote Now
                         </span>
                       </>
@@ -230,7 +233,7 @@ const NomineesList = ({
               >
                 {p}
               </button>
-            )
+            ),
           )}
           <button
             onClick={() => setPage((p) => Math.min(p + 1, pagination.pages))}

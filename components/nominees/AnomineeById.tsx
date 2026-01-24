@@ -106,7 +106,6 @@ export default function AnomineeById() {
                 <Users className="w-5 h-5" />
                 <span className="font-semibold">{n.party}</span>
                 <span className="text-slate-300">•</span>
-                <span>{n.group}</span>
               </motion.div>
             </div>
 
@@ -124,6 +123,15 @@ export default function AnomineeById() {
                   <p className="font-semibold text-slate-800">{n.province}</p>
                 </div>
               </div>
+              <div className="flex items-center gap-3 p-4 bg-blue-50 rounded-2xl">
+                <MapPin className="w-5 h-5 text-blue-600" />
+                <div>
+                  <p className="text-sm text-slate-500">Area</p>
+                  <p className="font-semibold text-slate-800">
+                    {n.address.ward}
+                  </p>
+                </div>
+              </div>
 
               <div className="flex items-center gap-3 p-4 bg-green-50 rounded-2xl">
                 <Calendar className="w-5 h-5 text-green-600" />
@@ -138,15 +146,6 @@ export default function AnomineeById() {
                   </p>
                 </div>
               </div>
-            </motion.div>
-
-            {/* Votes Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="text-center"
-            >
               <div className="inline-flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl shadow-lg">
                 <Vote className="w-6 h-6 text-white" />
                 <div>
