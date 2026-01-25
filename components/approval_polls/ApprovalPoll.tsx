@@ -117,7 +117,7 @@ export default function ApprovalPollComponent() {
                   <button
                     disabled={submitting}
                     onClick={() => vote("yes")}
-                    className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-sm font-semibold disabled:opacity-50"
+                    className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-sm font-semibold disabled:opacity-50 cursor-pointer"
                   >
                     Like
                   </button>
@@ -134,7 +134,7 @@ export default function ApprovalPollComponent() {
                   <button
                     disabled={submitting}
                     onClick={() => vote("no")}
-                    className="whitespace-nowrap bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-sm font-semibold  disabled:opacity-50"
+                    className="whitespace-nowrap bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-sm font-semibold  disabled:opacity-50 cursor-pointer"
                   >
                     <span>Don&apos;t Like</span>
                   </button>

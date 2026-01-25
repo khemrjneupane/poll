@@ -6,6 +6,7 @@ import { useDeviceIdentifiers } from "@/app/hooks/useDeviceIdentifiers";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { Crown } from "lucide-react";
+import { Button } from "../ui/button";
 
 interface Candidate {
   _id: string;
@@ -34,7 +35,7 @@ export default function PopularCandidatesList() {
         const res = await fetch("/api/popular-candidate/get-all");
         const data = await res.json();
         const sorted = (data.candidates || []).sort(
-          (a: Candidate, b: Candidate) => b.votes - a.votes
+          (a: Candidate, b: Candidate) => b.votes - a.votes,
         );
         setCandidates(sorted);
       } catch (err) {
@@ -55,7 +56,7 @@ export default function PopularCandidatesList() {
 
     // *** ⬇️ Confirmation Prompt ***
     const confirmed = window.confirm(
-      `Are you sure you want to vote for ${name} ${surname}? You can vote only once!`
+      `Are you sure you want to vote for ${name} ${surname}? You can vote only once!`,
     );
 
     if (!confirmed) return;
@@ -138,27 +139,37 @@ export default function PopularCandidatesList() {
                 />
               )}
 
-              <h3 className="text-lg font-semibold flex items-center justify-center gap-2">
+              <h3 className="flex items-center justify-center gap-2">
                 {c.name} {c.surname}
                 {isPM && (
                   <Crown className="w-5 h-5 text-yellow-400 drop-shadow-md" />
                 )}
               </h3>
 
-              <div className="text-md">
-                <p>{c.group === "party" ? c.party : "Independent"}</p>
+              <div className="text-sm">
+                <p>{c.party}</p>
                 <p>{c.province}</p>
                 <p>Votes: {c.votes}</p>
               </div>
-
-              <button
+              <Button
                 onClick={() => vote(c._id, c.name, c.surname)}
-                className={`mt-2 ${
-                  c.votes < 1 ? "bg-green-500 cursor-pointer" : "bg-red-600"
-                } text-white px-3 py-1 rounded text-sm md:text-lg w-full`}
+                className="group mt-2 bg-green-800 hover:bg-green-500
+                  text-white
+                  hover:text-slate-900/80
+                  px-3 py-1
+                  rounded
+                  w-full
+                  cursor-pointer
+                  transition-all
+                  duration-200
+                  ease-out
+                  hover:scale-[1.04]
+                  hover:shadow-lg"
               >
-                Vote
-              </button>
+                <span className="transition-transform duration-200 ease-out group-hover:scale-110">
+                  Vote
+                </span>
+              </Button>
             </div>
           );
         })}
