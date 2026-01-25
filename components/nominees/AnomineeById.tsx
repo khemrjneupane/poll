@@ -7,6 +7,7 @@ import Image from "next/image";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import { Home, Vote, Calendar, MapPin, Users } from "lucide-react";
+import { FaBackward } from "react-icons/fa";
 
 export default function AnomineeById() {
   const params = useParams();
@@ -56,7 +57,7 @@ export default function AnomineeById() {
         transition={{ duration: 0.6 }}
         className="max-w-2xl mx-auto"
       >
-        <Card className="rounded-3xl shadow-2xl border-0 overflow-hidden bg-white/80 backdrop-blur-sm">
+        <Card className="bg-gradient-to-r from-red-600 to-blue-600 bg-clip-text text-transparent drop-shadow-sm">
           <CardContent className="p-8">
             {/* Home Icon */}
             <motion.button
@@ -65,7 +66,7 @@ export default function AnomineeById() {
               onClick={() => router.push("/")}
               className="cursor-pointer fixed top-6 left-6 z-10 bg-white p-3 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 group"
             >
-              <Home className="w-6 h-6 text-slate-600 group-hover:text-blue-600 transition-colors" />
+              <FaBackward className="w-10 h-10 text-slate-600 group-hover:text-blue-600 transition-colors " />
             </motion.button>
             {/* Profile Header */}
             <div className="text-center mb-8">
@@ -101,11 +102,10 @@ export default function AnomineeById() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="flex items-center justify-center gap-2 text-lg text-slate-600 mb-4"
+                className="flex items-center justify-center gap-2 text-2xl bg-gradient-to-r from-red-600 to-blue-600 bg-clip-text text-transparent drop-shadow-sm mt-6"
               >
-                <Users className="w-5 h-5" />
+                <Users className="w-5 h-5  text-white" />
                 <span className="font-semibold">{n.party}</span>
-                <span className="text-slate-300">•</span>
               </motion.div>
             </div>
 
@@ -114,20 +114,26 @@ export default function AnomineeById() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"
+              className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 "
             >
-              <div className="flex items-center gap-3 p-4 bg-blue-50 rounded-2xl">
+              <div className="flex items-center gap-3 p-4 bg-blue-50 rounded-2xl ">
                 <MapPin className="w-5 h-5 text-blue-600" />
                 <div>
-                  <p className="text-sm text-slate-500">Province</p>
-                  <p className="font-semibold text-slate-800">{n.province}</p>
+                  <p className=" bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    Province
+                  </p>
+                  <p className="font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    {n.province}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-4 bg-blue-50 rounded-2xl">
                 <MapPin className="w-5 h-5 text-blue-600" />
                 <div>
-                  <p className="text-sm text-slate-500">Area</p>
-                  <p className="font-semibold text-slate-800">
+                  <p className=" bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    Area
+                  </p>
+                  <p className="font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     {n.address.ward}
                   </p>
                 </div>
@@ -136,8 +142,10 @@ export default function AnomineeById() {
               <div className="flex items-center gap-3 p-4 bg-green-50 rounded-2xl">
                 <Calendar className="w-5 h-5 text-green-600" />
                 <div>
-                  <p className="text-sm text-slate-500">Nominated</p>
-                  <p className="font-semibold text-slate-800">
+                  <p className=" bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    Nominated
+                  </p>
+                  <p className="font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     {new Date(n.createdAt).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "long",

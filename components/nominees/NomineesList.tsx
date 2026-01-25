@@ -89,16 +89,16 @@ const NomineesList = ({
       </h1>
       <button
         onClick={toggleSortOrder}
-        className=" text-slate-50 flex items-center gap-2 text-lg transition cursor-pointer mb-4"
+        className=" text-slate-50 flex items-center gap-2 text-lg transition cursor-pointer mb-4 bg-gradient-to-r from-red-600 to-blue-600 bg-clip-text text-transparent drop-shadow-sm"
       >
-        <ArrowUpDown className="w-4 h-4" />
+        <ArrowUpDown className="w-4 h-4 text-white" />
         {sortOrder === "desc" ? "Latest → Oldest" : "Oldest → Latest"}
       </button>
 
       {loading ? (
         <p>Loading nominees...</p>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-6 ">
           {nominees.map((n, index) => {
             const hasVoted =
               (userId && n.voters?.some((v) => v.userId === userId)) ||
@@ -106,44 +106,81 @@ const NomineesList = ({
               votedNominee === n._id;
             return (
               <React.Fragment key={n._id}>
-                {(index + 1) % 2 === 0 && (
+                {(index + 1) % 4 === 0 && (
                   <div
                     className="col-span-full text-slate-100 text-xl md:text-3xl w-full flex justify-center my-4"
                     key={`ad-${index}`}
                   >
                     <div className="ring-2 ring-slate-200 mx-2 p-6 w-full text-center bg-slate-800 rounded-lg">
-                      🎯 This block is reserved for ads
+                      🎯 Advertise your products
                     </div>
                   </div>
                 )}
                 <Link
                   href={`/nominees/${n._id}`}
                   key={n._id}
-                  className="flex flex-col md:flex-row items-center md:items-stretch justify-between gap-6 border-2 p-6 rounded-xl shadow-md bg-white"
+                  className="flex flex-col-reverse md:flex-row items-center md:items-stretch justify-between gap-6 border-2 p-4 rounded-xl shadow-md"
                 >
                   {/* Info Section */}
-                  <div className="flex-1 space-y-1">
+                  <div className="bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent drop-shadow-sm p-6">
                     <p>
                       <strong>Name:</strong> {`${n.name} ${n.surname}`}
                     </p>
-                    {/* <p>
-                      <strong>Age:</strong> {n.age}
-                    </p> */}
+
                     <p>
                       <strong>Party:</strong> {n.party}
                     </p>
-                    {/* <p>
-                      <strong>Group:</strong> {n.group}
-                    </p> */}
+
                     <p>
                       <strong>Constituent Area:</strong> {n.address.ward}
                     </p>
                     <p>
                       <strong>Province:</strong> {n.province}
                     </p>
-                    <p className="text-2xl font-extrabold">
-                      <strong>Votes:</strong> {n.votes}
-                    </p>
+                    {/* Votes Ring */}
+                    <div className="flex items-center gap-4 pt-4">
+                      <div
+                        className="
+          relative flex items-center justify-center
+          w-14 h-14 md:w-20 md:h-20
+          rounded-full
+          bg-black
+          ring-4 ring-indigo-500/40
+          shadow-[0_0_35px_rgba(99,102,241,0.9)]
+          group-hover:shadow-[0_0_65px_rgba(168,85,247,1)]
+          transition-all duration-300
+        "
+                      >
+                        {/* Glow */}
+                        <div
+                          className="
+          absolute inset-0 rounded-full
+          bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500
+          blur-xl opacity-40
+        "
+                        />
+
+                        <span
+                          className="
+          relative text-4xl font-extrabold
+          bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300
+          bg-clip-text text-transparent
+        "
+                        >
+                          {n.votes}
+                        </span>
+                      </div>
+
+                      <span
+                        className="
+        uppercase tracking-widest text-xs font-bold
+        bg-gradient-to-r from-indigo-400 to-pink-400
+        bg-clip-text text-transparent
+      "
+                      >
+                        Votes
+                      </span>
+                    </div>
                   </div>
 
                   {/* Vote Button in Center */}
@@ -180,11 +217,11 @@ const NomineesList = ({
                       <>
                         <Button
                           disabled
-                          className="rounded-full w-12 h-12 bg-slate-400 text-white shadow-md"
+                          className="rounded-full w-20 h-20 bg-slate-400 text-white shadow-md"
                         >
                           <DoorClosedLockedIcon className="w-5 h-5" />
                         </Button>
-                        <span className="text-xs text-slate-500 font-medium">
+                        <span className=" text-slate-500 font-medium">
                           Cannot Vote
                         </span>
                       </>

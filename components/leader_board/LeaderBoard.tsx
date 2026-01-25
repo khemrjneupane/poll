@@ -29,7 +29,7 @@ ChartJS.register(
   ArcElement,
   CategoryScale,
   LinearScale,
-  BarElement
+  BarElement,
 );
 
 export default function LeaderBoard() {
@@ -94,17 +94,17 @@ export default function LeaderBoard() {
     return <p className="text-center">No nominees found.</p>;
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-10">
-      <h1 className="text-3xl font-bold text-center mb-6 text-slate-100">
+    <div className="max-w-6xl mx-auto p-6 space-y-10 ">
+      <h1 className="text-3xl font-bold text-center mb-6 text-slate-100  bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent drop-shadow-sm">
         🏆 Leaderboard
       </h1>
 
       {/* Charts Section */}
       <div className="grid md:grid-cols-2 gap-8">
         {/* Pie Chart */}
-        <Card className="shadow-lg border border-gray-100">
+        <Card className="shadow-lg border border-gray-100  bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent drop-shadow-sm">
           <CardHeader>
-            <CardTitle className="text-lg text-center">
+            <CardTitle className="text-lg text-center bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent drop-shadow-sm">
               Top 7 Nominees (Pie Chart)
             </CardTitle>
           </CardHeader>
@@ -123,9 +123,9 @@ export default function LeaderBoard() {
         </Card>
 
         {/* Bar Chart */}
-        <Card className="shadow-lg border border-gray-100">
+        <Card className="shadow-lg border border-gray-100 ">
           <CardHeader>
-            <CardTitle className="text-lg text-center">
+            <CardTitle className="text-lg text-center  bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent drop-shadow-sm">
               Votes Distribution (Bar Chart)
             </CardTitle>
           </CardHeader>
@@ -140,7 +140,7 @@ export default function LeaderBoard() {
                 scales: {
                   x: {
                     ticks: {
-                      color: "#4b5563",
+                      color: "#4F46E5",
                       font: { size: 12 },
                     },
                   },
@@ -164,7 +164,7 @@ export default function LeaderBoard() {
           <Link href={`nominees/${nominee._id}`} key={nominee._id}>
             <Card
               key={nominee._id}
-              className="flex flex-col items-center text-center p-4 shadow-md hover:shadow-xl border border-gray-100 transition-all"
+              className="flex flex-col items-center text-center p-4 shadow-md hover:shadow-xl border border-gray-100 transition-all bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent drop-shadow-sm p-6"
             >
               <div className="relative mb-3">
                 <Image
@@ -184,15 +184,18 @@ export default function LeaderBoard() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-1">
-                <p className="text-gray-500 text-sm">
+                <p className="text-gray-500 bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent drop-shadow-sm">
                   {nominee.group === "party"
                     ? `Party: ${nominee.party}`
                     : "Independent"}
                 </p>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent drop-shadow-sm">
                   Province: {nominee.province}
                 </p>
-                <p className="font-medium text-gray-800">
+                <p className="text-gray-600 bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent drop-shadow-sm">
+                  Area: {nominee.address.ward}
+                </p>
+                <p className="font-medium text-gray-800 bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent drop-shadow-sm">
                   Votes: {nominee.votes}
                 </p>
               </CardContent>
