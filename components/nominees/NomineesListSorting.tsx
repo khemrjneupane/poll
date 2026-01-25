@@ -445,10 +445,50 @@ export default function NomineeListSorting({
                           <p className="">{`Area:  ${n.address.ward}`}</p>
                           <p className="">{`Province:  ${n.province}`}</p>
                           <div className="mt-1 flex items-center gap-2">
-                            <span className="font-semibold">Votes: </span>
-                            <span className="font-bold text-4xl text-blue-500">
-                              {n.votes}
-                            </span>
+                            {/* Votes Ring */}
+                            <div className="flex items-center gap-4 pt-4">
+                              <div
+                                className="
+          relative flex items-center justify-center
+          w-14 h-14 md:w-15 md:h-15
+          rounded-full
+          bg-black
+          ring-4 ring-indigo-500/40
+          shadow-[0_0_35px_rgba(99,102,241,0.9)]
+          group-hover:shadow-[0_0_65px_rgba(168,85,247,1)]
+          transition-all duration-300
+        "
+                              >
+                                {/* Glow */}
+                                <div
+                                  className="
+          absolute inset-0 rounded-full
+          bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500
+          blur-xl opacity-40
+        "
+                                />
+
+                                <span
+                                  className="
+          relative text-4xl font-extrabold
+          bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300
+          bg-clip-text text-transparent
+        "
+                                >
+                                  {n.votes}
+                                </span>
+                              </div>
+
+                              <span
+                                className="
+        uppercase tracking-widest text-xs font-bold
+        bg-gradient-to-r from-indigo-400 to-pink-400
+        bg-clip-text text-transparent
+      "
+                              >
+                                Votes
+                              </span>
+                            </div>
                           </div>
                         </div>
 
