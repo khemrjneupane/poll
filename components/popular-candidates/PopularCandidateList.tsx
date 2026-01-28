@@ -77,6 +77,11 @@ export default function PopularCandidatesList() {
         setCandidates(newData.candidates);
 
         toast.success("Your vote has been recorded");
+        if (typeof window !== "undefined" && window.gtag) {
+          window.gtag("event", "conversion", {
+            send_to: "AW-473921409/1zc1CM2yxeoBEIHv_eEB",
+          });
+        }
       } else {
         toast.error(result.message || "Vote failed");
       }

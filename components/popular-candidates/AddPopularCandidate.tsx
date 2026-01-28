@@ -25,7 +25,7 @@ export default function AddPopularCandidate({ userRole }: Props) {
   if (userRole !== "admin") return <p>Only admin can add candidates.</p>;
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -61,6 +61,11 @@ export default function AddPopularCandidate({ userRole }: Props) {
       if (res.ok) {
         //setMessage("Candidate added successfully!");
         toast.success("Candidate added successfully!");
+        if (typeof window !== "undefined" && window.gtag) {
+          window.gtag("event", "conversion", {
+            send_to: "AW-473921409/1zc1CM2yxeoBEIHv_eEB",
+          });
+        }
         setFormData({
           name: "",
           surname: "",

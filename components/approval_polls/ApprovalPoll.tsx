@@ -68,6 +68,11 @@ export default function ApprovalPollComponent() {
       if (res.ok) {
         setPoll(data.poll);
         toast.success("Vote submitted successfully!");
+        if (typeof window !== "undefined" && window.gtag) {
+          window.gtag("event", "conversion", {
+            send_to: "AW-473921409/1zc1CM2yxeoBEIHv_eEB",
+          });
+        }
       } else {
         toast.error(data.message || "Vote failed");
       }

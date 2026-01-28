@@ -54,6 +54,11 @@ const NomineesList = ({
       if (data.success) {
         await update();
         toast.success(`Congratulations!!! Your vote has been cast.`);
+        if (typeof window !== "undefined" && window.gtag) {
+          window.gtag("event", "conversion", {
+            send_to: "AW-473921409/1zc1CM2yxeoBEIHv_eEB",
+          });
+        }
         //CRITICAL: Refetch the nominees data to get updated vote counts
         queryClient.invalidateQueries({ queryKey: ["nominees"] });
       } else {
