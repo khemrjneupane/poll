@@ -68,6 +68,7 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-KJTS64MJ7W',
+            gtag('config', 'AW-473921409');
             {
             page_title: 'VoteNepal-Home',
             page_location: window.location.href
